@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME= fdf
-SRC :=
+NAME= fractol
+SRC := complex.c main.c
 OBJ := $(patsubst %.c, %.o, $(SRC))
 CFLAGS := -Wall -Wextra -Werror
 LIB_FLAG := -L libft/ -lft  -L minilibx_macos -lmlx -framework OpenGL -framework AppKit
