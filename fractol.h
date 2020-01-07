@@ -40,11 +40,20 @@ typedef struct  s_julia
 	t_point2	offset;
 }				t_julia;
 
+typedef struct s_mandelbrot
+{
+	void 		*mlx_ptr;
+	void		*win_ptr;
+	t_point2	offset;
+}				t_mandelbrot;
+
 t_complex	init_complex(float re, float im);
 t_complex	comp_sum(t_complex z1, t_complex z2);
 t_complex	comp_dif(t_complex z1, t_complex z2);
 t_complex	comp_multiply(t_complex z1, t_complex z2);
+
 int			check_if_mand(t_complex c, int max_iter);
+
 
 int			check_if_julia(t_complex c, int max_iter, t_complex z);
 void		draw_julia(t_julia julia);
