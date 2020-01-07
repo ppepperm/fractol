@@ -14,9 +14,33 @@
 
 int	deal_key(int key, void *param)
 {
-	char *kek;
+	t_julia *julia;
 
-	kek = (char*) param;
+	julia = (t_julia*) param;
+	if (key == 65362 || key == 126)
+	{
+		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+		julia->c.re -= 0.05;
+		draw_julia(*julia);
+	}
+	if (key == 65364 || key == 125)
+	{
+		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+		julia->c.re += 0.05;
+		draw_julia(*julia);
+	}
+	if (key == 65361 || key == 123)
+	{
+		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+		julia->c.im -= 0.05;
+		draw_julia(*julia);
+	}
+	if (key == 65363 || key == 124)
+	{
+		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+		julia->c.im -= 0.05;
+		draw_julia(*julia);
+	}
 	if (key == 53 || key == 65307)
 	{
 		exit(0);
@@ -34,31 +58,15 @@ int	cls(void *param)
 
 int	main()
 {
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_complex	c;
-	t_complex   z;
-	int			colour;
+	t_julia		julia;
 
-	z.re = -2;
-	c = init_complex(0 - 0.74543, 0.11301);
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 1000, 1000, "fractol");
-	mlx_pixel_put(mlx_ptr, win_ptr, 10, 10, 255);
-	while (z.re <= 2)
-	{
-		z.im = -2;
-		while (z.im <= 2)
-		{
-			colour = (check_if_julia(c, 200, z));
-			mlx_pixel_put(mlx_ptr, win_ptr, z.re * 250 + 500, z.im * 250 + 500, colour * 20);
-			z.im += 0.0005;
-		}
-		z.re += 0.0005;
-	}
-	mlx_hook(win_ptr, 2, 1L << 0, deal_key, (void*) mlx_ptr);
-	mlx_hook(win_ptr, 17, 0L, cls, (void*) mlx_ptr);
-	mlx_loop(mlx_ptr);
+	julia.c = init_complex(0 - 0.74543, 0.11301);
+	julia.mlx_ptr = mlx_init();
+	julia.win_ptr = mlx_new_window(julia.mlx_ptr, 1000, 1000, "fractol");
+	draw_julia(julia);
+	mlx_hook(julia.win_ptr, 2, 1L << 0, deal_key, (void*) &julia);
+	mlx_hook(julia.win_ptr, 17, 0L, cls, (void*) &julia);
+	mlx_loop(julia.mlx_ptr);
 	return (0);
 
 }
