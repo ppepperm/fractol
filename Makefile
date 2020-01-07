@@ -11,10 +11,10 @@
 # **************************************************************************** #
 
 NAME= fractol
-SRC := complex.c main.c
+SRC := julia.c complex.c main.c
 OBJ := $(patsubst %.c, %.o, $(SRC))
 CFLAGS := -Wall -Wextra -Werror
-LIB_FLAG := -L libft/ -lft  -L minilibx_macos -lmlx -framework OpenGL -framework AppKit
+LIB_FLAG := -L libft/ -lft  -L minilibx_macos -lmlx -framework OpenGL -framework AppKit -framework OpenCl
 LINUX_FLAG := -L libft/ -lft -L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11 -lm
 INCLUDES := /includes
 

@@ -36,13 +36,7 @@ t_complex comp_dif(t_complex z1, t_complex z2)
 
 t_complex comp_multiply(t_complex z1, t_complex z2)
 {
-	t_complex result;
-
-	result.re = z1.abs * z2.abs * cos(z1.phase + z2.phase);
-	result.re = z1.abs * z2.abs * sin(z1.phase + z2.phase);
-	result.abs = z1.abs * z2.abs;
-	result.phase = z1.phase + z2.phase;
-	return (result);
+	return (init_complex(z1.re*z2.re - z1.im*z2.im, z1.im*z2.re + z1.re * z2.im));
 }
 
 int check_if_mand(t_complex c, int max_iter)
@@ -57,8 +51,8 @@ int check_if_mand(t_complex c, int max_iter)
 	{
 		result = comp_multiply(z, z);
 		result = comp_sum(result, c);
-		if (result.abs >= 2)
-			return (255);
+		if (result.abs > 2)
+			return (i + 255* 256 * 256);
 		z = init_complex(result.re, result.im);
 		i++;
 	}
