@@ -32,7 +32,7 @@ int check_if_mand(t_complex c, int max_iter)
 	return (0);
 }
 
-void draw_mandelbrot(t_mandelbrot mandelbrot)
+void draw_mandelbrot(t_mandelbrot mand)
 {
 	t_complex   z;
 	int			colour;

@@ -36,6 +36,13 @@ typedef struct  s_julia
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	void		*img_ptr;
+	int		*img_data;
+	int 		x_size;
+	int			y_size;
+	int 		bpp;
+	int 		line_size;
+	int 		endian;
 	t_complex	c;
 	t_point2	offset;
 }				t_julia;

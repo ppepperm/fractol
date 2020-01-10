@@ -35,17 +35,25 @@ void draw_julia(t_julia julia)
 {
 	t_complex   z;
 	int			colour;
+	t_point2 dot;
+	float inc;
 
+	inc = 0.005;
 	z.re = -2;
-	while (z.re <= 2)
+	dot.x = 0;
+	while (dot.x < 800)
 	{
 		z.im = -2;
-		while (z.im <= 2)
+		dot.y = 0;
+		while (dot.y < 800)
 		{
-			colour = (check_if_julia(julia.c, 200, z));
-			mlx_pixel_put(julia.mlx_ptr, julia.win_ptr, z.re * 250 + 500, z.im * 250 + 500, colour * 20);
-			z.im += 0.001;
+			colour = (check_if_julia(julia.c, 100, z));
+			julia.img_data[dot.x + (julia.line_size * dot.y)/4] = colour * 2;
+			z.im += inc;
+			dot.y++;
 		}
-		z.re += 0.001;
+		z.re += inc;
+		dot.x++;
 	}
+	mlx_put_image_to_window(julia.mlx_ptr, julia.win_ptr, julia.img_ptr, 0,0);
 }
