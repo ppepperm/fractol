@@ -65,4 +65,6 @@ int			check_if_mand(t_complex c, int max_iter);
 int			check_if_julia(t_complex c, int max_iter, t_complex z);
 void		draw_julia(t_julia julia);
 
+int get_julia_image(t_julia julia, int *image);
+
 #endif

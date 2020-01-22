@@ -33,10 +33,11 @@ int check_if_julia(t_complex c, int max_iter, t_complex z)
 
 void draw_julia(t_julia julia)
 {
-	t_complex   z;
+	/*t_complex   z;
 	int			colour;
 	t_point2 dot;
 	float inc;
+	int count_zer  = 0;
 
 	inc = 0.005;
 	z.re = -2;
@@ -49,11 +50,15 @@ void draw_julia(t_julia julia)
 		{
 			colour = (check_if_julia(julia.c, 100, z));
 			julia.img_data[dot.x + (julia.line_size * dot.y)/4] = colour;
+			if (colour == 0)
+				count_zer++;
 			z.im += inc;
 			dot.y++;
 		}
 		z.re += inc;
 		dot.x++;
-	}
+	}*/
+	get_julia_image(julia, (int*)julia.img_data);
+	//printf("%d\n",count_zer);
 	mlx_put_image_to_window(julia.mlx_ptr, julia.win_ptr, julia.img_ptr, 0,0);
 }

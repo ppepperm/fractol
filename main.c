@@ -20,25 +20,25 @@ int	deal_key(int key, void *param)
 	if (key == 65362 || key == 126)
 	{
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->c.re += 0.005;
+		julia->c.re += 0.001;
 		draw_julia(*julia);
 	}
 	if (key == 65364 || key == 125)
 	{
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->c.re -= 0.005;
+		julia->c.re -= 0.001;
 		draw_julia(*julia);
 	}
 	if (key == 65361 || key == 123)
 	{
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->c.im -= 0.005;
+		julia->c.im -= 0.001;
 		draw_julia(*julia);
 	}
 	if (key == 65363 || key == 124)
 	{
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->c.im += 0.005;
+		julia->c.im += 0.001;
 		draw_julia(*julia);
 	}
 	if (key == 53 || key == 65307)

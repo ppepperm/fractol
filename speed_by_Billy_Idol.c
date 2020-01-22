@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <stdlib.h>
+#include "fractol.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <OpenCL/opencl.h>
 #include <math.h>
 
-int main() {
+int get_julia_image(t_julia julia, int *image) {
 	//get source kernel in char string
 	char *source;
 	int fd;
@@ -25,17 +25,17 @@ int main() {
 	source = (char *) malloc(sizeof(char) * 4096);
 	fd = open("Robert_E_O_Speedwagon.cl", O_RDWR);
 	f_size = read(fd, source, 4096);
+	close(fd);
 	//printf("%s", source);
 
-	//create 2 input vectors
-	int i;
+	//create input data array
 	const int LIST_SIZE = 5;
 	cl_float *A = (cl_float*)malloc(sizeof(cl_float)*LIST_SIZE);
 	A[0] = 0.005; // float increment
-	A[1] = -0.74543; // ReC
-	A[2] = 0.11301; //ImC
+	A[1] = julia.c.re; // ReC
+	A[2] = julia.c.im; //ImC
 	A[3] = 150; //Max iter, will be converted to int
-	A[4] = (1.0 + sqrt(1 + 4 * (A[1] * A[1] + A[2] * A[2])))/2.0; // fractal haracteristic number
+	A[4] = (1.0 + sqrt(1 + 4 * julia.c.abs))/2.0; // fractal haracteristic number
 
 	// Get platform and device information
 	cl_platform_id platform_id = NULL;
@@ -44,7 +44,7 @@ int main() {
 	cl_uint ret_num_platforms;
 	cl_int ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
 	printf("1 %d\n", ret);
-	ret = clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_ALL, 1,
+	ret = clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_CPU, 1,
 						 &device_id, &ret_num_devices);
 	printf("2 %d\n", ret);
 	// Create an OpenCL context
@@ -60,7 +60,7 @@ int main() {
 	cl_mem c_mem_obj = clCreateBuffer(context, CL_MEM_READ_WRITE,
 									  800 * 800 * sizeof(cl_int), NULL, &ret);
 	printf("6 %d\n", ret);
-	// Copy the lists A and B to their respective memory buffers
+	// Copy the data array
 	ret = clEnqueueWriteBuffer(command_queue, a_mem_obj, CL_TRUE, 0,
 							   LIST_SIZE * sizeof(cl_float), A, 0, NULL, NULL);
 	printf("7 %d\n", ret);
@@ -86,12 +86,12 @@ int main() {
 								 &global_item_size, &local_item_size, 0, NULL, NULL);
 	printf("13 %d\n", ret);
 	// Read the memory buffer C on the device to the local variable C
-	cl_int *C = (cl_int *) malloc(sizeof(cl_int) * 800 * 800);
+	//cl_int *C = (cl_int *) malloc(sizeof(cl_int) * 800 * 800);
 	ret = clEnqueueReadBuffer(command_queue, c_mem_obj, CL_TRUE, 0,
-							  800 * 800 * sizeof(cl_int), C, 0, NULL, NULL);
+							  800 * 800 * sizeof(cl_int), image, 0, NULL, NULL);
 	printf("14 %d\n", ret);
 	// Display the result to the screen
-	/*for (i = 0; i < 800 * 800; i++) {
+	/*for ( int i = 0; i < 800 * 800; i++) {
 		if (C[i] == 0) {
 			printf("%d\n", C[i]);
 		}
@@ -106,7 +106,6 @@ int main() {
 	ret = clReleaseMemObject(c_mem_obj);
 	ret = clReleaseCommandQueue(command_queue);
 	ret = clReleaseContext(context);
-	free(A);
-	free(C);
+	free(source);
 	return 0;
 }
