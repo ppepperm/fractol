@@ -24,7 +24,7 @@ int check_if_julia(t_complex c, int max_iter, t_complex z)
 		result = comp_multiply(z, z);
 		result = comp_sum(result, c);
 		if (result.abs > r)
-			return (i * 256);
+			return ((i + 20) * 256 + 50);
 		z = init_complex(result.re, result.im);
 		i++;
 	}
@@ -48,7 +48,7 @@ void draw_julia(t_julia julia)
 		while (dot.y < 800)
 		{
 			colour = (check_if_julia(julia.c, 100, z));
-			julia.img_data[dot.x + (julia.line_size * dot.y)/4] = colour * 2;
+			julia.img_data[dot.x + (julia.line_size * dot.y)/4] = colour;
 			z.im += inc;
 			dot.y++;
 		}

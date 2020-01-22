@@ -53,7 +53,6 @@ int	cls(void *param)
 	char *kek;
 
 	kek = (char*) param;
-	kek = kek;
 	exit(0);
 }
 
