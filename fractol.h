@@ -44,7 +44,8 @@ typedef struct  s_julia
 	int 		line_size;
 	int 		endian;
 	t_complex	c;
-	t_point2	offset;
+	t_complex	top_left;
+	float		zoom;
 }				t_julia;
 
 typedef struct s_mandelbrot

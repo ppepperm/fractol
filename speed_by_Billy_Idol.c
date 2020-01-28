@@ -31,7 +31,7 @@ int get_julia_image(t_julia julia, int *image) {
 	//create input data array
 	const int LIST_SIZE = 5;
 	cl_float *A = (cl_float*)malloc(sizeof(cl_float)*LIST_SIZE);
-	A[0] = 0.005; // float increment
+	A[0] = 4.0 * julia.zoom/1000.0; // float increment
 	A[1] = julia.c.re; // ReC
 	A[2] = julia.c.im; //ImC
 	A[3] = 150; //Max iter, will be converted to int
@@ -58,7 +58,7 @@ int get_julia_image(t_julia julia, int *image) {
 									  LIST_SIZE * sizeof(cl_float), NULL, &ret);
 	printf("5 %d\n", ret);
 	cl_mem c_mem_obj = clCreateBuffer(context, CL_MEM_READ_WRITE,
-									  800 * 800 * sizeof(cl_int), NULL, &ret);
+									  1000 * 1000 * sizeof(cl_int), NULL, &ret);
 	printf("6 %d\n", ret);
 	// Copy the data array
 	ret = clEnqueueWriteBuffer(command_queue, a_mem_obj, CL_TRUE, 0,
@@ -80,15 +80,15 @@ int get_julia_image(t_julia julia, int *image) {
 	ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &c_mem_obj);
 	printf("12 %d\n", ret);
 	// Execute the OpenCL kernel on the list
-	size_t global_item_size = 800; // Process the entire lists
-	size_t local_item_size = 80; // Divide work items into groups of 64
+	size_t global_item_size = 1000; // Process the entire lists
+	size_t local_item_size = 100; // Divide work items into groups of 64
 	ret = clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL,
 								 &global_item_size, &local_item_size, 0, NULL, NULL);
 	printf("13 %d\n", ret);
 	// Read the memory buffer C on the device to the local variable C
 	//cl_int *C = (cl_int *) malloc(sizeof(cl_int) * 800 * 800);
 	ret = clEnqueueReadBuffer(command_queue, c_mem_obj, CL_TRUE, 0,
-							  800 * 800 * sizeof(cl_int), image, 0, NULL, NULL);
+							  1000 * 1000 * sizeof(cl_int), image, 0, NULL, NULL);
 	printf("14 %d\n", ret);
 	// Display the result to the screen
 	/*for ( int i = 0; i < 800 * 800; i++) {

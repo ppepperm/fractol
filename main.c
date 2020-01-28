@@ -41,10 +41,23 @@ int	deal_key(int key, void *param)
 		julia->c.im += 0.001;
 		draw_julia(*julia);
 	}
+	if (key == 15)
+	{
+		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+		julia->zoom *= 0.95;
+		draw_julia(*julia);
+	}
+	if (key == 3)
+	{
+		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+		julia->zoom *= 1.05;
+		draw_julia(*julia);
+	}
 	if (key == 53 || key == 65307)
 	{
 		exit(0);
 	}
+	ft_putnbr(key);
 	return (0);
 }
 
@@ -60,16 +73,17 @@ int	main()
 {
 	t_julia		julia;
 
-	julia.x_size = 800;
-	julia.y_size = 800;
+	julia.x_size = 1000;
+	julia.y_size = 1000;
 	julia.endian = 1;
 	julia.bpp = 32;
-	julia.line_size = 800 * 4;
+	julia.line_size = 1000 * 4;
 	julia.c = init_complex(0 - 0.74543, 0.11301);
 	julia.mlx_ptr = mlx_init();
-	julia.win_ptr = mlx_new_window(julia.mlx_ptr, 800, 800, "fractol");
+	julia.win_ptr = mlx_new_window(julia.mlx_ptr, 1000, 1000, "fractol");
 	julia.img_ptr = mlx_new_image(julia.mlx_ptr, julia.x_size, julia.y_size);
 	julia.img_data = (int*)mlx_get_data_addr(julia.img_ptr, &(julia.bpp), &(julia.line_size), &(julia.endian));
+	julia.zoom = 1;
 	draw_julia(julia);
 	mlx_hook(julia.win_ptr, 2, 1L << 0, deal_key, (void*) &julia);
 	mlx_hook(julia.win_ptr, 17, 0L, cls, (void*) &julia);

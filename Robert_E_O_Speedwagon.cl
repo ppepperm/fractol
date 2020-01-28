@@ -58,9 +58,9 @@ __kernel void calc_julia(__global const float *data, __global int *image)
 	r = data[4];
 	z_re = -2;
 	z_im = -2 + i * inc;
-	while (k < 800)
+	while (k < 1000)
 	{
-		image[k + i * 800] = check(z_im, z_re, c_im, c_re, r, max_iter);
+		image[k + i * 1000] = check(z_im, z_re, c_im, c_re, r, max_iter);
 		k++;
 		z_re += inc;
 	}
