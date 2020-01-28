@@ -45,16 +45,16 @@ int	deal_key(int key, void *param)
 	{
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->zoom *= 0.95;
-		//julia->top_left.re *= 0.95;
-		//julia->top_left.im *= 0.95;
+		julia->top_left.re += (4 * julia->zoom / 0.95 - 4 * julia->zoom)/2;
+		julia->top_left.im += (4 * julia->zoom / 0.95 - 4 * julia->zoom)/2;
 		draw_julia(*julia);
 	}
 	if (key == 3)
 	{
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->zoom /= 0.95;
-		//julia->top_left.re /= 0.95;
-		//julia->top_left.im /= 0.95;
+		julia->top_left.re += (4 * julia->zoom * 0.95 - 4 * julia->zoom)/2;
+		julia->top_left.im += (4 * julia->zoom * 0.95 - 4 * julia->zoom)/2;
 		draw_julia(*julia);
 	}
 	if (key == 13)

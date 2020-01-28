@@ -34,7 +34,7 @@ int get_julia_image(t_julia julia, int *image) {
 	A[0] = 4.0 * julia.zoom/1000.0; // float increment
 	A[1] = julia.c.re; // ReC
 	A[2] = julia.c.im; //ImC
-	A[3] = 150; //Max iter, will be converted to int
+	A[3] = 200; //Max iter, will be converted to int
 	A[4] = (1.0 + sqrt(1 + 4 * julia.c.abs))/2.0; // fractal haracteristic number
 	A[5] = julia.top_left.re;
 	A[6] = julia.top_left.im;
