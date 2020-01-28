@@ -115,7 +115,7 @@ int	main()
 	julia.top_left = init_complex(-2,-2);
 	draw_julia(julia);
 	mlx_hook(julia.win_ptr, 2, 1L << 0, deal_key, (void*) &julia);
-	mlx_hook(julia.win_ptr, 2, 1L << 0, deal_key, (void*) &julia);
+	//mlx_hook(julia.win_ptr, 6, 0L, deal_mish, (void*) &julia);
 	mlx_hook(julia.win_ptr, 17, 0L, cls, (void*) &julia);
 	mlx_loop(julia.mlx_ptr);
 	return (0);

@@ -45,6 +45,7 @@ typedef struct  s_julia
 	int 		endian;
 	t_complex	c;
 	t_complex	top_left;
+	t_point2	mouse_pos;
 	float		zoom;
 }				t_julia;
 
