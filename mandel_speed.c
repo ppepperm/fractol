@@ -32,7 +32,7 @@ int get_mand_image(t_mandelbrot mand, int *image) {
 	const int LIST_SIZE = 4;
 	cl_float *A = (cl_float*)malloc(sizeof(cl_float)*LIST_SIZE);
 	A[0] = 4.0 * mand.zoom/SIZE; // float increment
-	A[1] = 100; //Max iter, will be converted to int
+	A[1] = 200; //Max iter, will be converted to int
 	A[2] = mand.top_left.re;
 	A[3] = mand.top_left.im;
 

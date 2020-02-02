@@ -14,12 +14,16 @@
 
 int	main(int ac, char **av)
 {
-	if (ac > 1)
+	if (ac == 2)
 	{
 		if (!ft_strcmp(av[1], "Julia"))
 			do_julia();
-		if (!ft_strcmp(av[1], "Mand"))
+		else if (!ft_strcmp(av[1], "Mand"))
 			do_mand();
+		else
+			ft_putstr("Wrong fractal name.\nPossible ones: Julia - Julia, Mandelbrot - Mand\n");
 	}
+	else
+		ft_putstr("Please specify fractal.\nPossible ones: Julia - Julia, Mandelbrot - Mand\n");
 	return (0);
 }
