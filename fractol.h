@@ -12,6 +12,7 @@
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
+# define SIZE 1000
 # include "mlx.h"
 # include <math.h>
 # include <stdio.h>
@@ -47,6 +48,7 @@ typedef struct  s_julia
 	t_complex	top_left;
 	t_point2	mouse_pos;
 	float		zoom;
+	char		mouse_stop;
 }				t_julia;
 
 typedef struct s_mandelbrot
@@ -63,8 +65,6 @@ t_complex	comp_multiply(t_complex z1, t_complex z2);
 
 int			check_if_mand(t_complex c, int max_iter);
 
-
-int			check_if_julia(t_complex c, int max_iter, t_complex z);
 void		draw_julia(t_julia julia);
 
 int get_julia_image(t_julia julia, int *image);

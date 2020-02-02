@@ -27,7 +27,7 @@ int check(float z_im, float z_re, float c_im, float c_re, float r, int max_iter)
 		abs = sqrt(res_re * res_re + res_im * res_im);
 		if (abs > r)
 		{
-			return ((i + 20) * 256 * 256  + 50);
+			return ((i * 255 /max_iter) * 256 * 256  + 50);
 		}
 		z_re = res_re;
 		z_im = res_im;
