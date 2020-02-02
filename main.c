@@ -133,6 +133,25 @@ int deal_click(int button, int x, int y, void *param)
 		julia->top_left.im -= (SIZE / 2 - y) * (4 * julia->zoom / SIZE);
 		draw_julia(*julia);
 	}
+	if (button == 2)
+	{
+			julia->mouse_press = 1;
+	}
+	return (0);
+}
+
+int deal_unclick (int button, int x, int y, void *param)
+{
+	t_julia *julia;
+
+	julia = (t_julia*)param;
+	printf("%d %d %d\n", button, x, y);
+	if (button == 2)
+	{
+		julia->mouse_press = 0;
+	}
+	julia->mouse_pos.x = x - SIZE/2;
+	julia->mouse_pos.y = SIZE/2 - y;
 	return (0);
 }
 
@@ -141,7 +160,7 @@ int deal_mish (int x, int y, void *param)
 	t_julia *julia;
 
 	julia = (t_julia*)param;
-	if (julia->mouse_stop)
+	if (!julia->mouse_stop)
 	{
 		if (julia->mouse_pos.x < x - SIZE/2)
 		{
@@ -165,6 +184,33 @@ int deal_mish (int x, int y, void *param)
 		{
 			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 			julia->c.im -= (0.001 * julia->zoom);
+			draw_julia(*julia);
+		}
+	}
+	if (julia->mouse_stop && julia->mouse_press)
+	{
+		if (julia->mouse_pos.x < x - SIZE/2)
+		{
+			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+			julia->top_left.re -= (0.01 * julia->zoom);
+			draw_julia(*julia);
+		}
+		if (julia->mouse_pos.x > x - SIZE/2)
+		{
+			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+			julia->top_left.re += (0.01 * julia->zoom);
+			draw_julia(*julia);
+		}
+		if (julia->mouse_pos.y < SIZE/2 - y)
+		{
+			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+			julia->top_left.im += (0.01 * julia->zoom);
+			draw_julia(*julia);
+		}
+		if (julia->mouse_pos.x > SIZE/2 - y)
+		{
+			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+			julia->top_left.im -= (0.01 * julia->zoom);
 			draw_julia(*julia);
 		}
 	}
@@ -192,6 +238,7 @@ int	main()
 	draw_julia(julia);
 	mlx_hook(julia.win_ptr, 2, 1L << 0, deal_key, (void*) &julia);
 	mlx_hook(julia.win_ptr, 4, 0L, deal_click, (void*) &julia);
+	mlx_hook(julia.win_ptr, 5, 0L, deal_unclick, (void*) &julia);
 	mlx_hook(julia.win_ptr, 6, 0L, deal_mish, (void*) &julia);
 	mlx_hook(julia.win_ptr, 17, 0L, cls, (void*) &julia);
 	mlx_loop(julia.mlx_ptr);

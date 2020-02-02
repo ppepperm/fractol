@@ -49,6 +49,7 @@ typedef struct  s_julia
 	t_point2	mouse_pos;
 	float		zoom;
 	char		mouse_stop;
+	char 		mouse_press;
 }				t_julia;
 
 typedef struct s_mandelbrot
