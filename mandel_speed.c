@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   mandel_speed.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppepperm <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/12 12:31:45 by ppepperm          #+#    #+#             */
-/*   Updated: 2020/01/22 14:21:00 by ppepperm         ###   ########.fr       */
+/*   Created: 2020/02/02 15:40:40 by ppepperm          #+#    #+#             */
+/*   Updated: 2020/02/02 15:40:42 by ppepperm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,24 @@
 #include <OpenCL/opencl.h>
 #include <math.h>
 
-int get_julia_image(t_julia julia, int *image) {
+int get_mand_image(t_mandelbrot mand, int *image) {
 	//get source kernel in char string
 	char *source;
 	int fd;
 	size_t f_size;
 	source = (char *) malloc(sizeof(char) * 4096);
-	fd = open("Robert_E_O_Speedwagon.cl", O_RDWR);
+	fd = open("mand_speed.cl", O_RDWR);
 	f_size = read(fd, source, 4096);
 	close(fd);
 	//printf("%s", source);
 
 	//create input data array
-	const int LIST_SIZE = 7;
+	const int LIST_SIZE = 4;
 	cl_float *A = (cl_float*)malloc(sizeof(cl_float)*LIST_SIZE);
-	A[0] = 4.0 * julia.zoom/SIZE; // float increment
-	A[1] = julia.c.re; // ReC
-	A[2] = julia.c.im; //ImC
-	A[3] = 100; //Max iter, will be converted to int
-	A[4] = (1.0 + sqrt(1 + 4 * julia.c.abs))/2.0; // fractal haracteristic number
-	A[5] = julia.top_left.re;
-	A[6] = julia.top_left.im;
+	A[0] = 4.0 * mand.zoom/SIZE; // float increment
+	A[1] = 100; //Max iter, will be converted to int
+	A[2] = mand.top_left.re;
+	A[3] = mand.top_left.im;
 
 	// Get platform and device information
 	cl_platform_id platform_id = NULL;
@@ -58,7 +55,7 @@ int get_julia_image(t_julia julia, int *image) {
 	cl_program program = clCreateProgramWithSource(context, 1,
 												   (const char **) &source, (const size_t *) &f_size, &ret);
 	ret = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
-	cl_kernel kernel = clCreateKernel(program, "calc_julia", &ret);
+	cl_kernel kernel = clCreateKernel(program, "calc_mand", &ret);
 	ret = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &a_mem_obj);
 	ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &c_mem_obj);
 	size_t global_item_size = SIZE; // Process the entire lists

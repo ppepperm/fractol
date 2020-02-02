@@ -56,7 +56,17 @@ typedef struct s_mandelbrot
 {
 	void 		*mlx_ptr;
 	void		*win_ptr;
-	t_point2	offset;
+	void		*img_ptr;
+	int		*img_data;
+	int 		x_size;
+	int			y_size;
+	int 		bpp;
+	int 		line_size;
+	int 		endian;
+	t_complex	top_left;
+	t_point2	mouse_pos;
+	float		zoom;
+	char 		mouse_press;
 }				t_mandelbrot;
 
 t_complex	init_complex(float re, float im);
@@ -64,10 +74,24 @@ t_complex	comp_sum(t_complex z1, t_complex z2);
 t_complex	comp_dif(t_complex z1, t_complex z2);
 t_complex	comp_multiply(t_complex z1, t_complex z2);
 
-int			check_if_mand(t_complex c, int max_iter);
+int get_mand_image(t_mandelbrot mand, int *image);
 
 void		draw_julia(t_julia julia);
 
 int get_julia_image(t_julia julia, int *image);
+int	deal_key(int key, void *param);
+int	cls(void *param);
+int deal_click(int button, int x, int y, void *param);
+int deal_unclick (int button, int x, int y, void *param);
+int deal_mish (int x, int y, void *param);
+void	do_julia(void);
+
+int get_mand_image(t_mandelbrot mand, int *image);
+int	deal_key_m(int key, void *param);
+int	cls_m(void *param);
+int deal_click_m(int button, int x, int y, void *param);
+int deal_unclick_m(int button, int x, int y, void *param);
+int deal_mish_m(int x, int y, void *param);
+void do_mand(void);
 
 #endif
