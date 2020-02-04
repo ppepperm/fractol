@@ -115,13 +115,13 @@ int	deal_key(int key, void *param) {
 	if (key == 24)
 	{
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->acc += 1;
+		julia->acc += 5;
 		draw_julia(*julia);
 	}
 	if (key == 27)
 	{
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->acc -= 1;
+		julia->acc -= 5;
 		draw_julia(*julia);
 	}
 	//ft_putnbr(key);

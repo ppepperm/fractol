@@ -27,10 +27,10 @@ typedef struct	s_point2
 
 typedef struct 	s_complex
 {
-	float		re;
-	float		im;
-	float		abs;
-	float		phase;
+	double		re;
+	double		im;
+	double		abs;
+	double		phase;
 }				t_complex;
 
 typedef struct  s_julia
@@ -48,7 +48,7 @@ typedef struct  s_julia
 	t_complex	c;
 	t_complex	top_left;
 	t_point2	mouse_pos;
-	float		zoom;
+	double		zoom;
 	char		mouse_stop;
 	char 		mouse_press;
 }				t_julia;
@@ -67,7 +67,7 @@ typedef struct s_mandelbrot
 	int			acc;
 	t_complex	top_left;
 	t_point2	mouse_pos;
-	float		zoom;
+	double		zoom;
 	char 		mouse_press;
 }				t_mandelbrot;
 
@@ -85,11 +85,11 @@ typedef struct s_ship
 	int			acc;
 	t_complex	top_left;
 	t_point2	mouse_pos;
-	float		zoom;
+	double		zoom;
 	char 		mouse_press;
 }				t_ship;
 
-t_complex	init_complex(float re, float im);
+t_complex	init_complex(double re, double im);
 t_complex	comp_sum(t_complex z1, t_complex z2);
 t_complex	comp_dif(t_complex z1, t_complex z2);
 t_complex	comp_multiply(t_complex z1, t_complex z2);

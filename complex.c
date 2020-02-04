@@ -13,7 +13,7 @@
 
 #include "fractol.h"
 
-t_complex init_complex(float re, float im)
+t_complex init_complex(double re, double im)
 {
 	t_complex z;
 

@@ -10,11 +10,11 @@
 /*                                                                              */
 /* **************************************************************************** */
 
-int check(float z_im, float z_re, float c_im, float c_re, float r, int max_iter)
+int check(double z_im, double z_re, double c_im, double c_re, double r, int max_iter)
 {
-	float res_re;
-	float res_im;
-	float abs;
+	double res_re;
+	double res_im;
+	double abs;
 	int i;
 
 	i = 1;
@@ -36,19 +36,19 @@ int check(float z_im, float z_re, float c_im, float c_re, float r, int max_iter)
 	return (0);
 }
 
-__kernel void calc_julia(__global const float *data, __global int *image)
+__kernel void calc_julia(__global const double *data, __global int *image)
 {
 	// Get the index of the current element to be processed
 	//Robert E. O. Speedwagon is the greatest hero of our time
 	int i = get_global_id(0);
 	int k = 0;
 	int max_iter;
-	float z_re;
-	float z_im;
-	float c_im;
-	float c_re;
-	float inc;
-	float r;
+	double z_re;
+	double z_im;
+	double c_im;
+	double c_re;
+	double inc;
+	double r;
 
 
 	inc = data[0];

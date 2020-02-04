@@ -31,8 +31,8 @@ int get_ship_image(t_ship ship, int *image)
 
 	//create input data array
 	const int LIST_SIZE = 4;
-	cl_float *A = (cl_float*)malloc(sizeof(cl_float)*LIST_SIZE);
-	A[0] = 4.0 * ship.zoom/SIZE; // float increment
+	cl_double *A = (cl_double*)malloc(sizeof(cl_double)*LIST_SIZE);
+	A[0] = 4.0 * ship.zoom/SIZE; // double increment
 	A[1] = ship.acc; //Max iter, will be converted to int
 	A[2] = ship.top_left.re;
 	A[3] = ship.top_left.im;
@@ -48,11 +48,11 @@ int get_ship_image(t_ship ship, int *image)
 	cl_context context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
 	cl_command_queue command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
 	cl_mem a_mem_obj = clCreateBuffer(context, CL_MEM_READ_ONLY,
-									  LIST_SIZE * sizeof(cl_float), NULL, &ret);
+									  LIST_SIZE * sizeof(cl_double), NULL, &ret);
 	cl_mem c_mem_obj = clCreateBuffer(context, CL_MEM_READ_WRITE,
 									  SIZE * SIZE * sizeof(cl_int), NULL, &ret);
 	ret = clEnqueueWriteBuffer(command_queue, a_mem_obj, CL_TRUE, 0,
-							   LIST_SIZE * sizeof(cl_float), A, 0, NULL, NULL);
+							   LIST_SIZE * sizeof(cl_double), A, 0, NULL, NULL);
 	cl_program program = clCreateProgramWithSource(context, 1,
 												   (const char **) &source, (const size_t *) &f_size, &ret);
 	ret = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);

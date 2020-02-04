@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int check(float c_im, float c_re, int max_iter)
+int check(double c_im, double c_re, int max_iter)
 {
-	float res_re;
-	float res_im;
-	float z_im = 0;
-	float z_re = 0;
-	float aabs;
+	double res_re;
+	double res_im;
+	double z_im = 0;
+	double z_re = 0;
+	double aabs;
 	int i;
 
 	i = 1;
@@ -38,16 +38,16 @@ int check(float c_im, float c_re, int max_iter)
 	return (0);
 }
 
-__kernel void calc_ship(__global const float *data, __global int *image)
+__kernel void calc_ship(__global const double *data, __global int *image)
 {
 	// Get the index of the current element to be processed
 	//Robert E. O. Speedwagon is the greatest hero of our time
 	int i = get_global_id(0);
 	int k = 0;
 	int max_iter;
-	float z_re;
-	float z_im;
-	float inc;
+	double z_re;
+	double z_im;
+	double inc;
 
 
 	inc = data[0];

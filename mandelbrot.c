@@ -92,13 +92,13 @@ int	deal_key_m(int key, void *param)
 	if (key == 24)
 	{
 		mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
-		mand->acc += 1;
+		mand->acc += 5;
 		draw_mand(*mand);
 	}
 	if (key == 27)
 	{
 		mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
-		mand->acc -= 1;
+		mand->acc -= 5;
 		draw_mand(*mand);
 	}
 	if (key == 53 || key == 65307)

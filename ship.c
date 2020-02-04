@@ -92,13 +92,13 @@ int	deal_key_s(int key, void *param)
 	if (key == 24)
 	{
 		mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
-		ship->acc += 1;
+		ship->acc += 5;
 		draw_ship(*ship);
 	}
 	if (key == 27)
 	{
 		mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
-		ship->acc -= 1;
+		ship->acc -= 5;
 		draw_ship(*ship);
 	}
 	if (key == 53 || key == 65307)
