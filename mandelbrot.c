@@ -32,6 +32,7 @@ void do_mand(void)
 	mand.img_ptr = mlx_new_image(mand.mlx_ptr, mand.x_size, mand.y_size);
 	mand.img_data = (int*)mlx_get_data_addr(mand.img_ptr, &(mand.bpp), &(mand.line_size), &(mand.endian));
 	mand.zoom = 1;
+	mand.acc = 100;
 	mand.top_left = init_complex(-2,-2);
 	mand.mouse_press = 0;
 	draw_mand(mand);
@@ -88,6 +89,18 @@ int	deal_key_m(int key, void *param)
 		mand->top_left.re -= (0.01 * mand->zoom);
 		draw_mand(*mand);
 	}
+	if (key == 24)
+	{
+		mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
+		mand->acc += 1;
+		draw_mand(*mand);
+	}
+	if (key == 27)
+	{
+		mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
+		mand->acc -= 1;
+		draw_mand(*mand);
+	}
 	if (key == 53 || key == 65307)
 	{
 		exit(0);
@@ -96,7 +109,7 @@ int	deal_key_m(int key, void *param)
 	return (0);
 }
 
-int	cls_m(void *param)
+int	cls_s(void *param)
 {
 	char *kek;
 

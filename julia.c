@@ -33,6 +33,7 @@ void do_julia(void)
 	julia.img_ptr = mlx_new_image(julia.mlx_ptr, julia.x_size, julia.y_size);
 	julia.img_data = (int*)mlx_get_data_addr(julia.img_ptr, &(julia.bpp), &(julia.line_size), &(julia.endian));
 	julia.zoom = 1;
+	julia.acc = 100;
 	julia.top_left = init_complex(-2,-2);
 	julia.mouse_press = 0;
 	draw_julia(julia);
@@ -44,85 +45,84 @@ void do_julia(void)
 	mlx_loop(julia.mlx_ptr);
 }
 
-int	deal_key(int key, void *param)
-{
+int	deal_key(int key, void *param) {
 	t_julia *julia;
 
-	julia = (t_julia*) param;
-	if (key == 65362 || key == 126)
-	{
+	julia = (t_julia *) param;
+	if (key == 65362 || key == 126) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->c.re += (0.001 * julia->zoom);
 		draw_julia(*julia);
 	}
-	if (key == 65364 || key == 125)
-	{
+	if (key == 65364 || key == 125) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->c.re -= (0.001 * julia->zoom);
 		draw_julia(*julia);
 	}
-	if (key == 65361 || key == 123)
-	{
+	if (key == 65361 || key == 123) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->c.im -= (0.001 * julia->zoom);
 		draw_julia(*julia);
 	}
-	if (key == 65363 || key == 124)
-	{
+	if (key == 65363 || key == 124) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->c.im += (0.001 * julia->zoom);
 		draw_julia(*julia);
 	}
-	if (key == 15)
-	{
+	if (key == 15) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->zoom *= 0.95;
-		julia->top_left.re += (4 * julia->zoom / 0.95 - 4 * julia->zoom)/2;
-		julia->top_left.im += (4 * julia->zoom / 0.95 - 4 * julia->zoom)/2;
+		julia->top_left.re += (4 * julia->zoom / 0.95 - 4 * julia->zoom) / 2;
+		julia->top_left.im += (4 * julia->zoom / 0.95 - 4 * julia->zoom) / 2;
 		draw_julia(*julia);
 	}
-	if (key == 3)
-	{
+	if (key == 3) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->zoom /= 0.95;
-		julia->top_left.re += (4 * julia->zoom * 0.95 - 4 * julia->zoom)/2;
-		julia->top_left.im += (4 * julia->zoom * 0.95 - 4 * julia->zoom)/2;
+		julia->top_left.re += (4 * julia->zoom * 0.95 - 4 * julia->zoom) / 2;
+		julia->top_left.im += (4 * julia->zoom * 0.95 - 4 * julia->zoom) / 2;
 		draw_julia(*julia);
 	}
-	if (key == 13)
-	{
+	if (key == 13) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->top_left.im += (0.01 * julia->zoom);
 		draw_julia(*julia);
 	}
-	if (key == 1)
-	{
+	if (key == 1) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->top_left.im -= (0.01 * julia->zoom);
 		draw_julia(*julia);
 	}
-	if (key == 0)
-	{
+	if (key == 0) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->top_left.re += (0.01 * julia->zoom);
 		draw_julia(*julia);
 	}
-	if (key == 2)
-	{
+	if (key == 2) {
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 		julia->top_left.re -= (0.01 * julia->zoom);
 		draw_julia(*julia);
 	}
-	if (key == 36)
-	{
+	if (key == 36) {
 		if (julia->mouse_stop)
 			julia->mouse_stop = 0;
 		else
 			julia->mouse_stop = 1;
 	}
-	if (key == 53 || key == 65307)
-	{
+	if (key == 53 || key == 65307) {
 		exit(0);
+	}
+	if (key == 24)
+	{
+		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+		julia->acc += 1;
+		draw_julia(*julia);
+	}
+	if (key == 27)
+	{
+		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+		julia->acc -= 1;
+		draw_julia(*julia);
 	}
 	//ft_putnbr(key);
 	return (0);

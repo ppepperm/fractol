@@ -20,10 +20,12 @@ int	main(int ac, char **av)
 			do_julia();
 		else if (!ft_strcmp(av[1], "Mand"))
 			do_mand();
+		else if (!ft_strcmp(av[1], "Ship"))
+			do_ship();
 		else
-			ft_putstr("Wrong fractal name.\nPossible ones: Julia - Julia, Mandelbrot - Mand\n");
+			ft_putstr("Wrong fractal name.\nPossible ones: Julia - Julia, Mandelbrot - Mand, Burning ship - Ship\n");
 	}
 	else
-		ft_putstr("Please specify fractal.\nPossible ones: Julia - Julia, Mandelbrot - Mand\n");
+		ft_putstr("Please specify fractal.\nPossible ones: Julia - Julia, Mandelbrot - Mand,  Burning ship - Ship\n");
 	return (0);
 }

@@ -44,6 +44,7 @@ typedef struct  s_julia
 	int 		bpp;
 	int 		line_size;
 	int 		endian;
+	int			acc;
 	t_complex	c;
 	t_complex	top_left;
 	t_point2	mouse_pos;
@@ -63,11 +64,30 @@ typedef struct s_mandelbrot
 	int 		bpp;
 	int 		line_size;
 	int 		endian;
+	int			acc;
 	t_complex	top_left;
 	t_point2	mouse_pos;
 	float		zoom;
 	char 		mouse_press;
 }				t_mandelbrot;
+
+typedef struct s_ship
+{
+	void 		*mlx_ptr;
+	void		*win_ptr;
+	void		*img_ptr;
+	int		*img_data;
+	int 		x_size;
+	int			y_size;
+	int 		bpp;
+	int 		line_size;
+	int 		endian;
+	int			acc;
+	t_complex	top_left;
+	t_point2	mouse_pos;
+	float		zoom;
+	char 		mouse_press;
+}				t_ship;
 
 t_complex	init_complex(float re, float im);
 t_complex	comp_sum(t_complex z1, t_complex z2);
@@ -93,5 +113,13 @@ int deal_click_m(int button, int x, int y, void *param);
 int deal_unclick_m(int button, int x, int y, void *param);
 int deal_mish_m(int x, int y, void *param);
 void do_mand(void);
+
+int get_ship_image(t_ship ship, int *image);
+int	deal_key_s(int key, void *param);
+int	cls_s(void *param);
+int deal_click_s(int button, int x, int y, void *param);
+int deal_unclick_s(int button, int x, int y, void *param);
+int deal_mish_s(int x, int y, void *param);
+void do_ship(void);
 
 #endif
