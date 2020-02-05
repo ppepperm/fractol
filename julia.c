@@ -145,32 +145,31 @@ int deal_click(int button, int x, int y, void *param)
 
 	julia = (t_julia*)param;
 	//printf("%d %d %d\n", button, x, y);
-	if (button == 4)
+	if (x >= 0 && x <= SIZE && y >= 0 && y <= SIZE)
 	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->zoom *= 0.95;
-		julia->top_left.re += (4 * julia->zoom / 0.95 - 4 * julia->zoom)/2;
-		julia->top_left.im += (4 * julia->zoom / 0.95 - 4 * julia->zoom)/2;
-		draw_julia(*julia);
-	}
-	if (button == 5)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->zoom /= 0.95;
-		julia->top_left.re += (4 * julia->zoom * 0.95 - 4 * julia->zoom)/2;
-		julia->top_left.im += (4 * julia->zoom * 0.95 - 4 * julia->zoom)/2;
-		draw_julia(*julia);
-	}
-	if (button == 1)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->top_left.re += (x - SIZE / 2) * (4 * julia->zoom / SIZE);
-		julia->top_left.im -= (SIZE / 2 - y) * (4 * julia->zoom / SIZE);
-		draw_julia(*julia);
-	}
-	if (button == 2)
-	{
-		julia->mouse_press = 1;
+		if (button == 4) {
+			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+			julia->zoom *= 0.95;
+			julia->top_left.re += (4 * julia->zoom / 0.95 - 4 * julia->zoom) / 2;
+			julia->top_left.im += (4 * julia->zoom / 0.95 - 4 * julia->zoom) / 2;
+			draw_julia(*julia);
+		}
+		if (button == 5) {
+			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+			julia->zoom /= 0.95;
+			julia->top_left.re += (4 * julia->zoom * 0.95 - 4 * julia->zoom) / 2;
+			julia->top_left.im += (4 * julia->zoom * 0.95 - 4 * julia->zoom) / 2;
+			draw_julia(*julia);
+		}
+		if (button == 1) {
+			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+			julia->top_left.re += (x - SIZE / 2) * (4 * julia->zoom / SIZE);
+			julia->top_left.im -= (SIZE / 2 - y) * (4 * julia->zoom / SIZE);
+			draw_julia(*julia);
+		}
+		if (button == 2) {
+			julia->mouse_press = 1;
+		}
 	}
 	return (0);
 }
@@ -195,61 +194,53 @@ int deal_mish (int x, int y, void *param)
 	t_julia *julia;
 
 	julia = (t_julia*)param;
-	if (!julia->mouse_stop)
-	{
-		if (julia->mouse_pos.x < x - SIZE/2)
-		{
-			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-			julia->c.re += (0.001 * julia->zoom);
-			draw_julia(*julia);
+	if (x >= 0 && x <= SIZE && y >= 0 && y <= SIZE) {
+		if (!julia->mouse_stop) {
+			if (julia->mouse_pos.x < x - SIZE / 2) {
+				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+				julia->c.re += (0.001 * julia->zoom);
+				draw_julia(*julia);
+			}
+			if (julia->mouse_pos.x > x - SIZE / 2) {
+				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+				julia->c.re -= (0.001 * julia->zoom);
+				draw_julia(*julia);
+			}
+			if (julia->mouse_pos.y < SIZE / 2 - y) {
+				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+				julia->c.im += (0.001 * julia->zoom);
+				draw_julia(*julia);
+			}
+			if (julia->mouse_pos.x > SIZE / 2 - y) {
+				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+				julia->c.im -= (0.001 * julia->zoom);
+				draw_julia(*julia);
+			}
 		}
-		if (julia->mouse_pos.x > x - SIZE/2)
-		{
-			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-			julia->c.re -= (0.001 * julia->zoom);
-			draw_julia(*julia);
+		if (julia->mouse_stop && julia->mouse_press) {
+			if (julia->mouse_pos.x < x - SIZE / 2) {
+				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+				julia->top_left.re -= (0.01 * julia->zoom);
+				draw_julia(*julia);
+			}
+			if (julia->mouse_pos.x > x - SIZE / 2) {
+				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+				julia->top_left.re += (0.01 * julia->zoom);
+				draw_julia(*julia);
+			}
+			if (julia->mouse_pos.y < SIZE / 2 - y) {
+				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+				julia->top_left.im += (0.01 * julia->zoom);
+				draw_julia(*julia);
+			}
+			if (julia->mouse_pos.x > SIZE / 2 - y) {
+				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
+				julia->top_left.im -= (0.01 * julia->zoom);
+				draw_julia(*julia);
+			}
 		}
-		if (julia->mouse_pos.y < SIZE/2 - y)
-		{
-			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-			julia->c.im += (0.001 * julia->zoom);
-			draw_julia(*julia);
-		}
-		if (julia->mouse_pos.x > SIZE/2 - y)
-		{
-			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-			julia->c.im -= (0.001 * julia->zoom);
-			draw_julia(*julia);
-		}
+		julia->mouse_pos.x = x - SIZE / 2;
+		julia->mouse_pos.y = SIZE / 2 - y;
 	}
-	if (julia->mouse_stop && julia->mouse_press)
-	{
-		if (julia->mouse_pos.x < x - SIZE/2)
-		{
-			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-			julia->top_left.re -= (0.01 * julia->zoom);
-			draw_julia(*julia);
-		}
-		if (julia->mouse_pos.x > x - SIZE/2)
-		{
-			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-			julia->top_left.re += (0.01 * julia->zoom);
-			draw_julia(*julia);
-		}
-		if (julia->mouse_pos.y < SIZE/2 - y)
-		{
-			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-			julia->top_left.im += (0.01 * julia->zoom);
-			draw_julia(*julia);
-		}
-		if (julia->mouse_pos.x > SIZE/2 - y)
-		{
-			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-			julia->top_left.im -= (0.01 * julia->zoom);
-			draw_julia(*julia);
-		}
-	}
-	julia->mouse_pos.x = x - SIZE/2;
-	julia->mouse_pos.y = SIZE/2 - y;
 	return (0);
 }

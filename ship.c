@@ -125,32 +125,30 @@ int deal_click_s(int button, int x, int y, void *param)
 
 	ship = (t_ship*)param;
 	//printf("%d %d %d\n", button, x, y);
-	if (button == 4)
-	{
-		mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
-		ship->zoom *= 0.95;
-		ship->top_left.re += (4 * ship->zoom / 0.95 - 4 * ship->zoom)/2;
-		ship->top_left.im += (4 * ship->zoom / 0.95 - 4 * ship->zoom)/2;
-		draw_ship(*ship);
-	}
-	if (button == 5)
-	{
-		mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
-		ship->zoom /= 0.95;
-		ship->top_left.re += (4 * ship->zoom * 0.95 - 4 * ship->zoom)/2;
-		ship->top_left.im += (4 * ship->zoom * 0.95 - 4 * ship->zoom)/2;
-		draw_ship(*ship);
-	}
-	if (button == 1)
-	{
-		mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
-		ship->top_left.re += (x - SIZE / 2) * (4 * ship->zoom / SIZE);
-		ship->top_left.im -= (SIZE / 2 - y) * (4 * ship->zoom / SIZE);
-		draw_ship(*ship);
-	}
-	if (button == 2)
-	{
-		ship->mouse_press = 1;
+	if (x >= 0 && x <= SIZE && y >= 0 && y <= SIZE) {
+		if (button == 4) {
+			mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
+			ship->zoom *= 0.95;
+			ship->top_left.re += (4 * ship->zoom / 0.95 - 4 * ship->zoom) / 2;
+			ship->top_left.im += (4 * ship->zoom / 0.95 - 4 * ship->zoom) / 2;
+			draw_ship(*ship);
+		}
+		if (button == 5) {
+			mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
+			ship->zoom /= 0.95;
+			ship->top_left.re += (4 * ship->zoom * 0.95 - 4 * ship->zoom) / 2;
+			ship->top_left.im += (4 * ship->zoom * 0.95 - 4 * ship->zoom) / 2;
+			draw_ship(*ship);
+		}
+		if (button == 1) {
+			mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
+			ship->top_left.re += (x - SIZE / 2) * (4 * ship->zoom / SIZE);
+			ship->top_left.im -= (SIZE / 2 - y) * (4 * ship->zoom / SIZE);
+			draw_ship(*ship);
+		}
+		if (button == 2) {
+			ship->mouse_press = 1;
+		}
 	}
 	return (0);
 }
@@ -175,34 +173,31 @@ int deal_mish_s(int x, int y, void *param)
 	t_ship *ship;
 
 	ship = (t_ship*)param;
-	if (ship->mouse_press)
-	{
-		if (ship->mouse_pos.x < x - SIZE/2)
-		{
-			mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
-			ship->top_left.re -= (0.01 * ship->zoom);
-			draw_ship(*ship);
+	if (x >= 0 && x <= SIZE && y >= 0 && y <= SIZE) {
+		if (ship->mouse_press) {
+			if (ship->mouse_pos.x < x - SIZE / 2) {
+				mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
+				ship->top_left.re -= (0.01 * ship->zoom);
+				draw_ship(*ship);
+			}
+			if (ship->mouse_pos.x > x - SIZE / 2) {
+				mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
+				ship->top_left.re += (0.01 * ship->zoom);
+				draw_ship(*ship);
+			}
+			if (ship->mouse_pos.y < SIZE / 2 - y) {
+				mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
+				ship->top_left.im += (0.01 * ship->zoom);
+				draw_ship(*ship);
+			}
+			if (ship->mouse_pos.x > SIZE / 2 - y) {
+				mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
+				ship->top_left.im -= (0.01 * ship->zoom);
+				draw_ship(*ship);
+			}
 		}
-		if (ship->mouse_pos.x > x - SIZE/2)
-		{
-			mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
-			ship->top_left.re += (0.01 * ship->zoom);
-			draw_ship(*ship);
-		}
-		if (ship->mouse_pos.y < SIZE/2 - y)
-		{
-			mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
-			ship->top_left.im += (0.01 * ship->zoom);
-			draw_ship(*ship);
-		}
-		if (ship->mouse_pos.x > SIZE/2 - y)
-		{
-			mlx_clear_window(ship->mlx_ptr, ship->win_ptr);
-			ship->top_left.im -= (0.01 * ship->zoom);
-			draw_ship(*ship);
-		}
+		ship->mouse_pos.x = x - SIZE / 2;
+		ship->mouse_pos.y = SIZE / 2 - y;
 	}
-	ship->mouse_pos.x = x - SIZE/2;
-	ship->mouse_pos.y = SIZE/2 - y;
 	return (0);
 }

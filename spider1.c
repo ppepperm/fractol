@@ -116,32 +116,30 @@ int deal_click_s1(int button, int x, int y, void *param)
 
 	mand = (t_mandelbrot*)param;
 	//printf("%d %d %d\n", button, x, y);
-	if (button == 4)
-	{
-		mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
-		mand->zoom *= 0.95;
-		mand->top_left.re += (4 * mand->zoom / 0.95 - 4 * mand->zoom)/2;
-		mand->top_left.im += (4 * mand->zoom / 0.95 - 4 * mand->zoom)/2;
-		draw_spider1(*mand);
-	}
-	if (button == 5)
-	{
-		mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
-		mand->zoom /= 0.95;
-		mand->top_left.re += (4 * mand->zoom * 0.95 - 4 * mand->zoom)/2;
-		mand->top_left.im += (4 * mand->zoom * 0.95 - 4 * mand->zoom)/2;
-		draw_spider1(*mand);
-	}
-	if (button == 1)
-	{
-		mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
-		mand->top_left.re += (x - SIZE / 2) * (4 * mand->zoom / SIZE);
-		mand->top_left.im -= (SIZE / 2 - y) * (4 * mand->zoom / SIZE);
-		draw_spider1(*mand);
-	}
-	if (button == 2)
-	{
-		mand->mouse_press = 1;
+	if (x >= 0 && x <= SIZE && y >= 0 && y <= SIZE) {
+		if (button == 4) {
+			mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
+			mand->zoom *= 0.95;
+			mand->top_left.re += (4 * mand->zoom / 0.95 - 4 * mand->zoom) / 2;
+			mand->top_left.im += (4 * mand->zoom / 0.95 - 4 * mand->zoom) / 2;
+			draw_spider1(*mand);
+		}
+		if (button == 5) {
+			mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
+			mand->zoom /= 0.95;
+			mand->top_left.re += (4 * mand->zoom * 0.95 - 4 * mand->zoom) / 2;
+			mand->top_left.im += (4 * mand->zoom * 0.95 - 4 * mand->zoom) / 2;
+			draw_spider1(*mand);
+		}
+		if (button == 1) {
+			mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
+			mand->top_left.re += (x - SIZE / 2) * (4 * mand->zoom / SIZE);
+			mand->top_left.im -= (SIZE / 2 - y) * (4 * mand->zoom / SIZE);
+			draw_spider1(*mand);
+		}
+		if (button == 2) {
+			mand->mouse_press = 1;
+		}
 	}
 	return (0);
 }
@@ -166,34 +164,31 @@ int deal_mish_s1(int x, int y, void *param)
 	t_mandelbrot *mand;
 
 	mand = (t_mandelbrot*)param;
-	if (mand->mouse_press)
-	{
-		if (mand->mouse_pos.x < x - SIZE/2)
-		{
-			mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
-			mand->top_left.re -= (0.01 * mand->zoom);
-			draw_spider1(*mand);
+	if (x >= 0 && x <= SIZE && y >= 0 && y <= SIZE) {
+		if (mand->mouse_press) {
+			if (mand->mouse_pos.x < x - SIZE / 2) {
+				mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
+				mand->top_left.re -= (0.01 * mand->zoom);
+				draw_spider1(*mand);
+			}
+			if (mand->mouse_pos.x > x - SIZE / 2) {
+				mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
+				mand->top_left.re += (0.01 * mand->zoom);
+				draw_spider1(*mand);
+			}
+			if (mand->mouse_pos.y < SIZE / 2 - y) {
+				mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
+				mand->top_left.im += (0.01 * mand->zoom);
+				draw_spider1(*mand);
+			}
+			if (mand->mouse_pos.x > SIZE / 2 - y) {
+				mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
+				mand->top_left.im -= (0.01 * mand->zoom);
+				draw_spider1(*mand);
+			}
 		}
-		if (mand->mouse_pos.x > x - SIZE/2)
-		{
-			mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
-			mand->top_left.re += (0.01 * mand->zoom);
-			draw_spider1(*mand);
-		}
-		if (mand->mouse_pos.y < SIZE/2 - y)
-		{
-			mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
-			mand->top_left.im += (0.01 * mand->zoom);
-			draw_spider1(*mand);
-		}
-		if (mand->mouse_pos.x > SIZE/2 - y)
-		{
-			mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
-			mand->top_left.im -= (0.01 * mand->zoom);
-			draw_spider1(*mand);
-		}
+		mand->mouse_pos.x = x - SIZE / 2;
+		mand->mouse_pos.y = SIZE / 2 - y;
 	}
-	mand->mouse_pos.x = x - SIZE/2;
-	mand->mouse_pos.y = SIZE/2 - y;
 	return (0);
 }
