@@ -1,7 +1,7 @@
 /* **************************************************************************** */
 /*                                                                              */
 /*                                                         :::      ::::::::    */
-/*    mand_speed.cl                                      :+:      :+:    :+:    */
+/*    spider1_speed.cl                                   :+:      :+:    :+:    */
 /*                                                     +:+ +:+         +:+      */
 /*    By: ppepperm <marvin@42.fr>                    +#+  +:+       +#+         */
 /*                                                 +#+#+#+#+#+   +#+            */
@@ -14,8 +14,8 @@ int check(double c_im, double c_re, int max_iter)
 {
 	double res_re;
 	double res_im;
-	double z_im = 0;
-	double z_re = 0;
+	double z_im = c_im;
+	double z_re = c_re;
 	double abs;
 	int i;
 
@@ -33,8 +33,8 @@ int check(double c_im, double c_re, int max_iter)
 		}
 		z_re = res_re;
 		z_im = res_im;
-		//c_im = c_im / 2 + z_im;
-		//c_re = c_re / 2 + z_re;
+		c_im = c_im / 2 + z_im;
+		c_re = c_re / 2 + z_re;
 		i++;
 	}
 	return (0);

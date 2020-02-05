@@ -122,4 +122,11 @@ int deal_unclick_s(int button, int x, int y, void *param);
 int deal_mish_s(int x, int y, void *param);
 void do_ship(void);
 
+int get_spider1_image(t_mandelbrot mand, int *image);
+int	deal_key_s1(int key, void *param);
+int deal_click_s1(int button, int x, int y, void *param);
+int deal_unclick_s1(int button, int x, int y, void *param);
+int deal_mish_s1(int x, int y, void *param);
+void do_spider1(void);
+
 #endif
