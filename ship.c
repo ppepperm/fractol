@@ -40,7 +40,7 @@ void do_ship(void)
 	mlx_hook(ship.win_ptr, 4, 0L, deal_click_s, (void*) &ship);
 	mlx_hook(ship.win_ptr, 5, 0L, deal_unclick_s, (void*) &ship);
 	mlx_hook(ship.win_ptr, 6, 0L, deal_mish_s, (void*) &ship);
-	mlx_hook(ship.win_ptr, 17, 0L, cls, (void*) &ship);
+	mlx_hook(ship.win_ptr, 17, 0L, cls_s, (void*) &ship);
 	mlx_loop(ship.mlx_ptr);
 }
 
@@ -103,17 +103,19 @@ int	deal_key_s(int key, void *param)
 	}
 	if (key == 53 || key == 65307)
 	{
+		free_ship(*ship);
 		exit(0);
 	}
 	//ft_putnbr(key);
 	return (0);
 }
 
-int	cls_m(void *param)
+int	cls_s(void *param)
 {
-	char *kek;
+	t_ship *kek;
 
-	kek = (char*) param;
+	kek = (t_ship*) param;
+	free_ship(*kek);
 	exit(0);
 }
 

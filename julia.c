@@ -109,7 +109,9 @@ int	deal_key(int key, void *param) {
 		else
 			julia->mouse_stop = 1;
 	}
-	if (key == 53 || key == 65307) {
+	if (key == 53 || key == 65307)
+	{
+		free_julia(*julia);
 		exit(0);
 	}
 	if (key == 24)
@@ -130,9 +132,10 @@ int	deal_key(int key, void *param) {
 
 int	cls(void *param)
 {
-	char *kek;
+	t_julia *kek;
 
-	kek = (char*) param;
+	kek = (t_julia*) param;
+	free_julia(*kek);
 	exit(0);
 }
 

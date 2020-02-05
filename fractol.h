@@ -129,4 +129,9 @@ int deal_unclick_s1(int button, int x, int y, void *param);
 int deal_mish_s1(int x, int y, void *param);
 void do_spider1(void);
 
+void free_mand(t_mandelbrot mand);
+void free_julia(t_julia mand);
+void free_ship(t_ship mand);
+
+
 #endif

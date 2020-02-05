@@ -40,7 +40,7 @@ void do_mand(void)
 	mlx_hook(mand.win_ptr, 4, 0L, deal_click_m, (void*) &mand);
 	mlx_hook(mand.win_ptr, 5, 0L, deal_unclick_m, (void*) &mand);
 	mlx_hook(mand.win_ptr, 6, 0L, deal_mish_m, (void*) &mand);
-	mlx_hook(mand.win_ptr, 17, 0L, cls, (void*) &mand);
+	mlx_hook(mand.win_ptr, 17, 0L, cls_m, (void*) &mand);
 	mlx_loop(mand.mlx_ptr);
 }
 
@@ -103,17 +103,19 @@ int	deal_key_m(int key, void *param)
 	}
 	if (key == 53 || key == 65307)
 	{
+		free_mand(*mand);
 		exit(0);
 	}
 	//ft_putnbr(key);
 	return (0);
 }
 
-int	cls_s(void *param)
+int	cls_m(void *param)
 {
-	char *kek;
+	t_mandelbrot *kek;
 
-	kek = (char*) param;
+	kek = (t_mandelbrot*) param;
+	free_mand(*kek);
 	exit(0);
 }
 

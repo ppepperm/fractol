@@ -40,7 +40,7 @@ void do_spider1(void)
 	mlx_hook(mand.win_ptr, 4, 0L, deal_click_s1, (void*) &mand);
 	mlx_hook(mand.win_ptr, 5, 0L, deal_unclick_s1, (void*) &mand);
 	mlx_hook(mand.win_ptr, 6, 0L, deal_mish_s1, (void*) &mand);
-	mlx_hook(mand.win_ptr, 17, 0L, cls, (void*) &mand);
+	mlx_hook(mand.win_ptr, 17, 0L, cls_m, (void*) &mand);
 	mlx_loop(mand.mlx_ptr);
 }
 
@@ -103,6 +103,7 @@ int	deal_key_s1(int key, void *param)
 	}
 	if (key == 53 || key == 65307)
 	{
+		free_mand(*mand);
 		exit(0);
 	}
 	//ft_putnbr(key);
