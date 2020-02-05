@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ppepperm <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ppepperm <marvin@42.fr>                    +#+  +:+       +#+         #n
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/17 12:14:41 by ppepperm          #+#    #+#              #
 #    Updated: 2019/11/17 12:14:43 by ppepperm         ###   ########.fr        #
@@ -15,7 +15,7 @@ SRC := speed_by_Billy_Idol.c mandelbrot.c mandel_speed.c ship.c ship_speed.c spi
 OBJ := $(patsubst %.c, %.o, $(SRC))
 CFLAGS := -Wall -Wextra -Werror
 LIB_FLAG := -L libft/ -lft  -L minilibx_macos -lmlx -framework OpenGL -framework AppKit -framework OpenCl
-LINUX_FLAG := -L libft/ -lft -L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11 -lm
+LINUX_FLAG := -L libft/ -lft -L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11  -l OpenCL -lm
 INCLUDES := /includes
 
 all: $(NAME)

@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "fractol.h"
 
-t_complex init_complex(double re, double im)
+t_complex	init_complex(double re, double im)
 {
 	t_complex z;
 
@@ -21,20 +20,21 @@ t_complex init_complex(double re, double im)
 	z.im = im;
 	z.abs = sqrt(re * re + im * im);
 	z.phase = atan2(im, re);
-	return z;
+	return (z);
 }
 
-t_complex comp_sum(t_complex z1, t_complex z2)
+t_complex	comp_sum(t_complex z1, t_complex z2)
 {
 	return (init_complex(z1.re + z2.re, z1.im + z2.im));
 }
 
-t_complex comp_dif(t_complex z1, t_complex z2)
+t_complex	comp_dif(t_complex z1, t_complex z2)
 {
 	return (init_complex(z1.re - z2.re, z1.im - z2.im));
 }
 
-t_complex comp_multiply(t_complex z1, t_complex z2)
+t_complex	comp_multiply(t_complex z1, t_complex z2)
 {
-	return (init_complex(z1.re*z2.re - z1.im*z2.im, z1.im*z2.re + z1.re * z2.im));
+	return (init_complex(z1.re * z2.re - z1.im * z2.im,\
+	z1.im * z2.re + z1.re * z2.im));
 }

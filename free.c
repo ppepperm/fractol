@@ -12,21 +12,21 @@
 
 #include "fractol.h"
 
-void free_mand(t_mandelbrot mand)
+void	free_mand(t_mandelbrot mand)
 {
 	mlx_destroy_image(mand.mlx_ptr, mand.img_ptr);
 	mlx_destroy_window(mand.mlx_ptr, mand.win_ptr);
 	free(mand.mlx_ptr);
 }
 
-void free_julia(t_julia mand)
+void	free_julia(t_julia mand)
 {
 	mlx_destroy_image(mand.mlx_ptr, mand.img_ptr);
 	mlx_destroy_window(mand.mlx_ptr, mand.win_ptr);
 	free(mand.mlx_ptr);
 }
 
-void free_ship(t_ship mand)
+void	free_ship(t_ship mand)
 {
 	mlx_destroy_image(mand.mlx_ptr, mand.img_ptr);
 	mlx_destroy_window(mand.mlx_ptr, mand.win_ptr);

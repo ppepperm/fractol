@@ -25,7 +25,7 @@ typedef struct	s_point2
 	int			y;
 }				t_point2;
 
-typedef struct 	s_complex
+typedef struct	s_complex
 {
 	double		re;
 	double		im;
@@ -33,105 +33,104 @@ typedef struct 	s_complex
 	double		phase;
 }				t_complex;
 
-typedef struct  s_julia
+typedef struct	s_julia
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img_ptr;
-	int		*img_data;
-	int 		x_size;
+	int			*img_data;
+	int			x_size;
 	int			y_size;
-	int 		bpp;
-	int 		line_size;
-	int 		endian;
+	int			bpp;
+	int			line_size;
+	int			endian;
 	int			acc;
 	t_complex	c;
 	t_complex	top_left;
 	t_point2	mouse_pos;
 	double		zoom;
 	char		mouse_stop;
-	char 		mouse_press;
+	char		mouse_press;
 }				t_julia;
 
-typedef struct s_mandelbrot
+typedef struct	s_mandelbrot
 {
-	void 		*mlx_ptr;
+	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img_ptr;
-	int		*img_data;
-	int 		x_size;
+	int			*img_data;
+	int			x_size;
 	int			y_size;
-	int 		bpp;
-	int 		line_size;
-	int 		endian;
+	int			bpp;
+	int			line_size;
+	int			endian;
 	int			acc;
 	t_complex	top_left;
 	t_point2	mouse_pos;
 	double		zoom;
-	char 		mouse_press;
+	char		mouse_press;
 }				t_mandelbrot;
 
-typedef struct s_ship
+typedef struct	s_ship
 {
-	void 		*mlx_ptr;
+	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img_ptr;
-	int		*img_data;
-	int 		x_size;
+	int			*img_data;
+	int			x_size;
 	int			y_size;
-	int 		bpp;
-	int 		line_size;
-	int 		endian;
+	int			bpp;
+	int			line_size;
+	int			endian;
 	int			acc;
 	t_complex	top_left;
 	t_point2	mouse_pos;
 	double		zoom;
-	char 		mouse_press;
+	char		mouse_press;
 }				t_ship;
 
-t_complex	init_complex(double re, double im);
-t_complex	comp_sum(t_complex z1, t_complex z2);
-t_complex	comp_dif(t_complex z1, t_complex z2);
-t_complex	comp_multiply(t_complex z1, t_complex z2);
+t_complex		init_complex(double re, double im);
+t_complex		comp_sum(t_complex z1, t_complex z2);
+t_complex		comp_dif(t_complex z1, t_complex z2);
+t_complex		comp_multiply(t_complex z1, t_complex z2);
 
-int get_mand_image(t_mandelbrot mand, int *image);
+int				get_mand_image(t_mandelbrot mand, int *image);
 
-void		draw_julia(t_julia julia);
+void			draw_julia(t_julia julia);
 
-int get_julia_image(t_julia julia, int *image);
-int	deal_key(int key, void *param);
-int	cls(void *param);
-int deal_click(int button, int x, int y, void *param);
-int deal_unclick (int button, int x, int y, void *param);
-int deal_mish (int x, int y, void *param);
-void	do_julia(void);
+int				get_julia_image(t_julia julia, int *image);
+int				deal_key(int key, void *param);
+int				cls(void *param);
+int				deal_click(int button, int x, int y, void *param);
+int				deal_unclick(int button, int x, int y, void *param);
+int				deal_mish (int x, int y, void *param);
+void			do_julia(void);
 
-int get_mand_image(t_mandelbrot mand, int *image);
-int	deal_key_m(int key, void *param);
-int	cls_m(void *param);
-int deal_click_m(int button, int x, int y, void *param);
-int deal_unclick_m(int button, int x, int y, void *param);
-int deal_mish_m(int x, int y, void *param);
-void do_mand(void);
+int				get_mand_image(t_mandelbrot mand, int *image);
+int				deal_key_m(int key, void *param);
+int				cls_m(void *param);
+int				deal_click_m(int button, int x, int y, void *param);
+int				deal_unclick_m(int button, int x, int y, void *param);
+int				deal_mish_m(int x, int y, void *param);
+void			do_mand(void);
 
-int get_ship_image(t_ship ship, int *image);
-int	deal_key_s(int key, void *param);
-int	cls_s(void *param);
-int deal_click_s(int button, int x, int y, void *param);
-int deal_unclick_s(int button, int x, int y, void *param);
-int deal_mish_s(int x, int y, void *param);
-void do_ship(void);
+int				get_ship_image(t_ship ship, int *image);
+int				deal_key_s(int key, void *param);
+int				cls_s(void *param);
+int				deal_click_s(int button, int x, int y, void *param);
+int				deal_unclick_s(int button, int x, int y, void *param);
+int				deal_mish_s(int x, int y, void *param);
+void			do_ship(void);
 
-int get_spider1_image(t_mandelbrot mand, int *image);
-int	deal_key_s1(int key, void *param);
-int deal_click_s1(int button, int x, int y, void *param);
-int deal_unclick_s1(int button, int x, int y, void *param);
-int deal_mish_s1(int x, int y, void *param);
-void do_spider1(void);
+int				get_spider1_image(t_mandelbrot mand, int *image);
+int				deal_key_s1(int key, void *param);
+int				deal_click_s1(int button, int x, int y, void *param);
+int				deal_unclick_s1(int button, int x, int y, void *param);
+int				deal_mish_s1(int x, int y, void *param);
+void			do_spider1(void);
 
-void free_mand(t_mandelbrot mand);
-void free_julia(t_julia mand);
-void free_ship(t_ship mand);
-
+void			free_mand(t_mandelbrot mand);
+void			free_julia(t_julia mand);
+void			free_ship(t_ship mand);
 
 #endif
