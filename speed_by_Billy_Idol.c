@@ -75,6 +75,7 @@ int get_julia_image(t_julia julia, int *image) {
 	ret = clReleaseMemObject(c_mem_obj);
 	ret = clReleaseCommandQueue(command_queue);
 	ret = clReleaseContext(context);
+	free(A);
 	free(source);
 	return 0;
 }

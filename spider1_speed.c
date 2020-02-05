@@ -73,5 +73,6 @@ int get_spider1_image(t_mandelbrot mand, int *image)
 	ret = clReleaseCommandQueue(command_queue);
 	ret = clReleaseContext(context);
 	free(source);
+	free(A);
 	return 0;
 }

@@ -74,5 +74,6 @@ int get_ship_image(t_ship ship, int *image)
 	ret = clReleaseCommandQueue(command_queue);
 	ret = clReleaseContext(context);
 	free(source);
+	free(A);
 	return 0;
 }
