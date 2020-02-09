@@ -51,68 +51,13 @@ int		deal_key(int key, void *param)
 	t_julia *julia;
 
 	julia = (t_julia*)param;
-	if (key == 65362 || key == 126)
+	change_c(julia, key);
+	zoom_j(julia, key);
+	move_j(julia, key);
+	if (key == 27)
 	{
 		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->c.re += (0.001 * julia->zoom);
-		draw_julia(*julia);
-	}
-	if (key == 65364 || key == 125)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->c.re -= (0.001 * julia->zoom);
-		draw_julia(*julia);
-	}
-	if (key == 65361 || key == 123)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->c.im -= (0.001 * julia->zoom);
-		draw_julia(*julia);
-	}
-	if (key == 65363 || key == 124)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->c.im += (0.001 * julia->zoom);
-		draw_julia(*julia);
-	}
-	if (key == 15)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->zoom *= 0.95;
-		julia->top_left.re += (4 * julia->zoom / 0.95 - 4 * julia->zoom) / 2;
-		julia->top_left.im += (4 * julia->zoom / 0.95 - 4 * julia->zoom) / 2;
-		draw_julia(*julia);
-	}
-	if (key == 3)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->zoom /= 0.95;
-		julia->top_left.re += (4 * julia->zoom * 0.95 - 4 * julia->zoom) / 2;
-		julia->top_left.im += (4 * julia->zoom * 0.95 - 4 * julia->zoom) / 2;
-		draw_julia(*julia);
-	}
-	if (key == 13)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->top_left.im += (0.01 * julia->zoom);
-		draw_julia(*julia);
-	}
-	if (key == 1)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->top_left.im -= (0.01 * julia->zoom);
-		draw_julia(*julia);
-	}
-	if (key == 0)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->top_left.re += (0.01 * julia->zoom);
-		draw_julia(*julia);
-	}
-	if (key == 2)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->top_left.re -= (0.01 * julia->zoom);
+		julia->acc -= 5;
 		draw_julia(*julia);
 	}
 	if (key == 36)
@@ -127,28 +72,7 @@ int		deal_key(int key, void *param)
 		free_julia(*julia);
 		exit(0);
 	}
-	if (key == 24)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->acc += 5;
-		draw_julia(*julia);
-	}
-	if (key == 27)
-	{
-		mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-		julia->acc -= 5;
-		draw_julia(*julia);
-	}
 	return (0);
-}
-
-int		cls(void *param)
-{
-	t_julia *kek;
-
-	kek = (t_julia*)param;
-	free_julia(*kek);
-	exit(0);
 }
 
 int		deal_click(int button, int x, int y, void *param)
@@ -162,48 +86,20 @@ int		deal_click(int button, int x, int y, void *param)
 		{
 			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 			julia->zoom *= 0.95;
-			julia->top_left.re +=\
-			(4 * julia->zoom / 0.95 - 4 * julia->zoom) / 2;
-			julia->top_left.im +=\
-			(4 * julia->zoom / 0.95 - 4 * julia->zoom) / 2;
+			julia->top_left.re += (julia->zoom / 0.95 - julia->zoom) * 2;
+			julia->top_left.im += (julia->zoom / 0.95 - julia->zoom) * 2;
 			draw_julia(*julia);
 		}
 		if (button == 5)
 		{
 			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
 			julia->zoom /= 0.95;
-			julia->top_left.re +=\
-			(4 * julia->zoom * 0.95 - 4 * julia->zoom) / 2;
-			julia->top_left.im +=\
-			(4 * julia->zoom * 0.95 - 4 * julia->zoom) / 2;
+			julia->top_left.re += (julia->zoom * 0.95 - julia->zoom) * 2;
+			julia->top_left.im += (julia->zoom * 0.95 - julia->zoom) * 2;
 			draw_julia(*julia);
 		}
-		if (button == 1)
-		{
-			mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-			julia->top_left.re += (x - SIZE / 2) * (4 * julia->zoom / SIZE);
-			julia->top_left.im -= (SIZE / 2 - y) * (4 * julia->zoom / SIZE);
-			draw_julia(*julia);
-		}
-		if (button == 2)
-		{
-			julia->mouse_press = 1;
-		}
+		press_j(julia, button, x, y);
 	}
-	return (0);
-}
-
-int		deal_unclick(int button, int x, int y, void *param)
-{
-	t_julia *julia;
-
-	julia = (t_julia*)param;
-	if (button == 2)
-	{
-		julia->mouse_press = 0;
-	}
-	julia->mouse_pos.x = x - SIZE / 2;
-	julia->mouse_pos.y = SIZE / 2 - y;
 	return (0);
 }
 
@@ -215,59 +111,8 @@ int		deal_mish(int x, int y, void *param)
 	if (x >= 0 && x <= SIZE && y >= 0 && y <= SIZE)
 	{
 		if (!julia->mouse_stop)
-		{
-			if (julia->mouse_pos.x < x - SIZE / 2)
-			{
-				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-				julia->c.re += (0.001 * julia->zoom);
-				draw_julia(*julia);
-			}
-			if (julia->mouse_pos.x > x - SIZE / 2)
-			{
-				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-				julia->c.re -= (0.001 * julia->zoom);
-				draw_julia(*julia);
-			}
-			if (julia->mouse_pos.y < SIZE / 2 - y)
-			{
-				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-				julia->c.im += (0.001 * julia->zoom);
-				draw_julia(*julia);
-			}
-			if (julia->mouse_pos.x > SIZE / 2 - y)
-			{
-				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-				julia->c.im -= (0.001 * julia->zoom);
-				draw_julia(*julia);
-			}
-		}
-		if (julia->mouse_stop && julia->mouse_press)
-		{
-			if (julia->mouse_pos.x < x - SIZE / 2)
-			{
-				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-				julia->top_left.re -= (0.01 * julia->zoom);
-				draw_julia(*julia);
-			}
-			if (julia->mouse_pos.x > x - SIZE / 2)
-			{
-				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-				julia->top_left.re += (0.01 * julia->zoom);
-				draw_julia(*julia);
-			}
-			if (julia->mouse_pos.y < SIZE / 2 - y)
-			{
-				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-				julia->top_left.im += (0.01 * julia->zoom);
-				draw_julia(*julia);
-			}
-			if (julia->mouse_pos.x > SIZE / 2 - y)
-			{
-				mlx_clear_window(julia->mlx_ptr, julia->win_ptr);
-				julia->top_left.im -= (0.01 * julia->zoom);
-				draw_julia(*julia);
-			}
-		}
+			change_c_m(julia, x, y);
+		mouse_move_j(julia, x, y);
 		julia->mouse_pos.x = x - SIZE / 2;
 		julia->mouse_pos.y = SIZE / 2 - y;
 	}

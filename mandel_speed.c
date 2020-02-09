@@ -17,62 +17,67 @@
 #include <OpenCL/opencl.h>
 #include <math.h>
 
-int get_mand_image(t_mandelbrot mand, int *image) {
-	//get source kernel in char string
-	char *source;
-	int fd;
-	size_t f_size;
-	source = (char *) malloc(sizeof(char) * 4096);
-	fd = open("mand_speed.cl", O_RDWR);
-	f_size = read(fd, source, 4096);
-	close(fd);
-	//printf("%s", source);
+static void	init_short(t_opencl *o)
+{
+	o->platform_id = NULL;
+	o->device_id = NULL;
+	o->ret = clGetPlatformIDs(1, &o->platform_id, &o->ret_num_platforms);
+	o->ret = clGetDeviceIDs(o->platform_id, CL_DEVICE_TYPE_CPU, 1,\
+	&o->device_id, &o->ret_num_devices);
+	o->context = clCreateContext(NULL, 1, &o->device_id, NULL, NULL, &o->ret);
+	o->command_queue = clCreateCommandQueue(o->context, o->device_id, 0,\
+	&o->ret);
+	o->a_mem_obj = clCreateBuffer(o->context, CL_MEM_READ_ONLY,\
+	o->array_size * sizeof(cl_double), NULL, &o->ret);
+	o->c_mem_obj = clCreateBuffer(o->context, CL_MEM_READ_WRITE,\
+	SIZE * SIZE * sizeof(cl_int), NULL, &o->ret);
+	o->ret = clEnqueueWriteBuffer(o->command_queue, o->a_mem_obj, CL_TRUE, 0,\
+	o->array_size * sizeof(cl_double), o->data_array, 0, NULL, NULL);
+	o->program = clCreateProgramWithSource(o->context, 1,\
+	(const char **)&o->source, (const size_t *)&o->f_size, &o->ret);
+	o->ret = clBuildProgram(o->program, 1, &o->device_id, NULL, NULL, NULL);
+	o->kernel = clCreateKernel(o->program, "calc_mand", &o->ret);
+	o->ret = clSetKernelArg(o->kernel, 0, sizeof(cl_mem),\
+	(void *)&o->a_mem_obj);
+	o->ret = clSetKernelArg(o->kernel, 1, sizeof(cl_mem),\
+	(void *)&o->c_mem_obj);
+	o->global_item_size = SIZE;
+	o->local_item_size = SIZE / 10;
+}
 
-	//create input data array
-	const int LIST_SIZE = 4;
-	cl_double *A = (cl_double*)malloc(sizeof(cl_double)*LIST_SIZE);
-	A[0] = 4.0 * mand.zoom/SIZE; // double increment
-	A[1] = mand.acc; //Max iter, will be converted to int
-	A[2] = mand.top_left.re;
-	A[3] = mand.top_left.im;
+static void	free_seq(t_opencl o)
+{
+	o.ret = clFlush(o.command_queue);
+	o.ret = clFinish(o.command_queue);
+	o.ret = clReleaseKernel(o.kernel);
+	o.ret = clReleaseProgram(o.program);
+	o.ret = clReleaseMemObject(o.a_mem_obj);
+	o.ret = clReleaseMemObject(o.c_mem_obj);
+	o.ret = clReleaseCommandQueue(o.command_queue);
+	o.ret = clReleaseContext(o.context);
+	free(o.data_array);
+	free(o.source);
+}
 
-	// Get platform and device information
-	cl_platform_id platform_id = NULL;
-	cl_device_id device_id = NULL;
-	cl_uint ret_num_devices;
-	cl_uint ret_num_platforms;
-	cl_int ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
-	ret = clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_CPU, 1,
-						 &device_id, &ret_num_devices);
-	cl_context context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
-	cl_command_queue command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
-	cl_mem a_mem_obj = clCreateBuffer(context, CL_MEM_READ_ONLY,
-									  LIST_SIZE * sizeof(cl_double), NULL, &ret);
-	cl_mem c_mem_obj = clCreateBuffer(context, CL_MEM_READ_WRITE,
-									  SIZE * SIZE * sizeof(cl_int), NULL, &ret);
-	ret = clEnqueueWriteBuffer(command_queue, a_mem_obj, CL_TRUE, 0,
-							   LIST_SIZE * sizeof(cl_double), A, 0, NULL, NULL);
-	cl_program program = clCreateProgramWithSource(context, 1,
-												   (const char **) &source, (const size_t *) &f_size, &ret);
-	ret = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
-	cl_kernel kernel = clCreateKernel(program, "calc_mand", &ret);
-	ret = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *) &a_mem_obj);
-	ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *) &c_mem_obj);
-	size_t global_item_size = SIZE; // Process the entire lists
-	size_t local_item_size = SIZE/10; // Divide work items into groups of 64
-	ret = clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL,
-								 &global_item_size, &local_item_size, 0, NULL, NULL);
-	ret = clEnqueueReadBuffer(command_queue, c_mem_obj, CL_TRUE, 0,
-							  SIZE * SIZE * sizeof(cl_int), image, 0, NULL, NULL);
-	ret = clFlush(command_queue);
-	ret = clFinish(command_queue);
-	ret = clReleaseKernel(kernel);
-	ret = clReleaseProgram(program);
-	ret = clReleaseMemObject(a_mem_obj);
-	ret = clReleaseMemObject(c_mem_obj);
-	ret = clReleaseCommandQueue(command_queue);
-	ret = clReleaseContext(context);
-	free(source);
-	free(A);
-	return 0;
+int			get_mand_image(t_mandelbrot mand, int *image)
+{
+	t_opencl o;
+
+	o.source = (char *)malloc(sizeof(char) * 4096);
+	o.fd = open("mand_speed.cl", O_RDWR);
+	o.f_size = read(o.fd, o.source, 4096);
+	close(o.fd);
+	o.array_size = 4;
+	o.data_array = (cl_double*)malloc(sizeof(cl_double) * o.array_size);
+	o.data_array[0] = 4.0 * mand.zoom / SIZE;
+	o.data_array[1] = mand.acc;
+	o.data_array[2] = mand.top_left.re;
+	o.data_array[3] = mand.top_left.im;
+	init_short(&o);
+	o.ret = clEnqueueNDRangeKernel(o.command_queue, o.kernel, 1, NULL,\
+	&o.global_item_size, &o.local_item_size, 0, NULL, NULL);
+	o.ret = clEnqueueReadBuffer(o.command_queue, o.c_mem_obj, CL_TRUE, 0,\
+	SIZE * SIZE * sizeof(cl_int), image, 0, NULL, NULL);
+	free_seq(o);
+	return (0);
 }

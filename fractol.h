@@ -156,4 +156,12 @@ void			free_mand(t_mandelbrot mand);
 void			free_julia(t_julia mand);
 void			free_ship(t_ship mand);
 
+void			change_c(t_julia *julia, int key);
+void			move_j(t_julia *julia, int key);
+void			zoom_j(t_julia *julia, int key);
+void			press_j(t_julia *julia, int button, int x, int y);
+void			change_c_m(t_julia *julia, int x, int y);
+
+void			mouse_move_j (t_julia *julia, int x, int y);
+
 #endif

@@ -84,3 +84,26 @@ int			get_julia_image(t_julia julia, int *image)
 	free_seq(o);
 	return (0);
 }
+
+int			deal_unclick(int button, int x, int y, void *param)
+{
+	t_julia *julia;
+
+	julia = (t_julia*)param;
+	if (button == 2)
+	{
+		julia->mouse_press = 0;
+	}
+	julia->mouse_pos.x = x - SIZE / 2;
+	julia->mouse_pos.y = SIZE / 2 - y;
+	return (0);
+}
+
+int			cls(void *param)
+{
+	t_julia *kek;
+
+	kek = (t_julia*)param;
+	free_julia(*kek);
+	exit(0);
+}
