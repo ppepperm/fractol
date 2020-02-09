@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   spider1_speed.c                                    :+:      :+:    :+:   */
+/*   mandel_speed.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppepperm <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/05 15:02:14 by ppepperm          #+#    #+#             */
-/*   Updated: 2020/02/05 15:02:16 by ppepperm         ###   ########.fr       */
+/*   Created: 2020/02/02 15:40:40 by ppepperm          #+#    #+#             */
+/*   Updated: 2020/02/02 15:40:42 by ppepperm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "fractol.h"
+#include "../includes/fractol.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <OpenCL/opencl.h>
@@ -59,12 +59,12 @@ static void	free_seq(t_opencl o)
 	free(o.source);
 }
 
-int			get_spider1_image(t_mandelbrot mand, int *image)
+int			get_mand_image(t_mandelbrot mand, int *image)
 {
 	t_opencl o;
 
 	o.source = (char *)malloc(sizeof(char) * 4096);
-	o.fd = open("spider1_speed.cl", O_RDWR);
+	o.fd = open("src/mand_speed.cl", O_RDWR);
 	o.f_size = read(o.fd, o.source, 4096);
 	close(o.fd);
 	o.array_size = 4;
@@ -80,4 +80,27 @@ int			get_spider1_image(t_mandelbrot mand, int *image)
 	SIZE * SIZE * sizeof(cl_int), image, 0, NULL, NULL);
 	free_seq(o);
 	return (0);
+}
+
+int			deal_unclick_m(int button, int x, int y, void *param)
+{
+	t_mandelbrot *mand;
+
+	mand = (t_mandelbrot*)param;
+	if (button == 2)
+	{
+		mand->mouse_press = 0;
+	}
+	mand->mouse_pos.x = x - SIZE / 2;
+	mand->mouse_pos.y = SIZE / 2 - y;
+	return (0);
+}
+
+int			cls_m(void *param)
+{
+	t_mandelbrot *kek;
+
+	kek = (t_mandelbrot*)param;
+	free_mand(*kek);
+	exit(0);
 }

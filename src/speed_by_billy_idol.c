@@ -64,7 +64,7 @@ int			get_julia_image(t_julia julia, int *image)
 	t_opencl o;
 
 	o.source = (char *)malloc(sizeof(char) * 4096);
-	o.fd = open("Robert_E_O_Speedwagon.cl", O_RDWR);
+	o.fd = open("src/Robert_E_O_Speedwagon.cl", O_RDWR);
 	o.f_size = read(o.fd, o.source, 4096);
 	close(o.fd);
 	o.array_size = 7;

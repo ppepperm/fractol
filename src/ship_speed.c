@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "fractol.h"
+#include "../includes/fractol.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <OpenCL/opencl.h>
@@ -64,7 +64,7 @@ int			get_ship_image(t_ship ship, int *image)
 	t_opencl o;
 
 	o.source = (char *)malloc(sizeof(char) * 4096);
-	o.fd = open("ship_speed.cl", O_RDWR);
+	o.fd = open("src/ship_speed.cl", O_RDWR);
 	o.f_size = read(o.fd, o.source, 4096);
 	close(o.fd);
 	o.array_size = 4;

@@ -11,10 +11,10 @@
 # **************************************************************************** #
 
 NAME= fractol
-SRC := speed_by_billy_idol.c mandelbrot.c mandel_speed.c ship.c ship_speed.c spider1.c spider1_speed.c julia.c complex.c free.c main.c shortcut1.c shortcut2.c shortcut3.c
+SRC := src/speed_by_billy_idol.c src/mandelbrot.c src/mandel_speed.c src/ship.c src/ship_speed.c src/spider1.c src/spider1_speed.c src/julia.c src/complex.c src/free.c src/main.c src/shortcut1.c src/shortcut2.c src/shortcut3.c
 OBJ := $(patsubst %.c, %.o, $(SRC))
-CFLAGS := -Wall -Wextra -Werror
-LIB_FLAG := -L libft/ -lft  -L minilibx_macos -lmlx -framework OpenGL -framework AppKit -framework OpenCl
+CFLAGS := -Wall -Wextra -Werror  -I includes
+LIB_FLAG :=  -L libft/ -lft  -L minilibx_macos -lmlx -framework OpenGL -framework AppKit -framework OpenCl
 LINUX_FLAG := -L libft/ -lft -L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11  -l OpenCL -lm
 INCLUDES := /includes
 
