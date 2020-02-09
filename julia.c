@@ -112,7 +112,8 @@ int		deal_mish(int x, int y, void *param)
 	{
 		if (!julia->mouse_stop)
 			change_c_m(julia, x, y);
-		mouse_move_j(julia, x, y);
+		if (julia->mouse_stop && julia->mouse_press)
+			mouse_move_j(julia, x, y);
 		julia->mouse_pos.x = x - SIZE / 2;
 		julia->mouse_pos.y = SIZE / 2 - y;
 	}

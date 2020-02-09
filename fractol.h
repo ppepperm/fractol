@@ -120,6 +120,8 @@ t_complex		comp_multiply(t_complex z1, t_complex z2);
 int				get_mand_image(t_mandelbrot mand, int *image);
 
 void			draw_julia(t_julia julia);
+void			draw_mand(t_mandelbrot mand);
+void			draw_ship(t_ship ship);
 
 int				get_julia_image(t_julia julia, int *image);
 int				deal_key(int key, void *param);
@@ -163,5 +165,14 @@ void			press_j(t_julia *julia, int button, int x, int y);
 void			change_c_m(t_julia *julia, int x, int y);
 
 void			mouse_move_j (t_julia *julia, int x, int y);
+void			mouse_press_m (t_mandelbrot *mand, int button, int x, int y);
+void			mouse_move_m(t_mandelbrot *mand, int x, int y);
+void			zoom_m(t_mandelbrot *mand, int key);
+void			move_m(t_mandelbrot *mand, int key);
+
+void			mouse_move_sh(t_ship *ship, int x, int y);
+void			mouse_press_sh(t_ship *ship,int button, int x, int y);
+void			zoom_sh(t_ship *ship, int key);
+void			move_sh(t_ship *ship, int key);
 
 #endif

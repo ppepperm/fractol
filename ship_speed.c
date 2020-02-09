@@ -81,3 +81,26 @@ int			get_ship_image(t_ship ship, int *image)
 	free_seq(o);
 	return (0);
 }
+
+int			cls_s(void *param)
+{
+	t_ship *kek;
+
+	kek = (t_ship*)param;
+	free_ship(*kek);
+	exit(0);
+}
+
+int			deal_unclick_s(int button, int x, int y, void *param)
+{
+	t_ship *ship;
+
+	ship = (t_ship*)param;
+	if (button == 2)
+	{
+		ship->mouse_press = 0;
+	}
+	ship->mouse_pos.x = x - SIZE / 2;
+	ship->mouse_pos.y = SIZE / 2 - y;
+	return (0);
+}

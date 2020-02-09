@@ -81,3 +81,26 @@ int			get_mand_image(t_mandelbrot mand, int *image)
 	free_seq(o);
 	return (0);
 }
+
+int		deal_unclick_m(int button, int x, int y, void *param)
+{
+	t_mandelbrot *mand;
+
+	mand = (t_mandelbrot*)param;
+	if (button == 2)
+	{
+		mand->mouse_press = 0;
+	}
+	mand->mouse_pos.x = x - SIZE / 2;
+	mand->mouse_pos.y = SIZE / 2 - y;
+	return (0);
+}
+
+int		cls_m(void *param)
+{
+	t_mandelbrot *kek;
+
+	kek = (t_mandelbrot*)param;
+	free_mand(*kek);
+	exit(0);
+}
