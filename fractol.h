@@ -12,12 +12,13 @@
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
-# define SIZE 1000
+# define SIZE 800
 # include "mlx.h"
 # include <math.h>
 # include <stdio.h>
 # include "libft.h"
 # include <fcntl.h>
+# include <OpenCL/opencl.h>
 
 typedef struct	s_point2
 {
@@ -88,6 +89,28 @@ typedef struct	s_ship
 	double		zoom;
 	char		mouse_press;
 }				t_ship;
+
+typedef struct	s_opencl
+{
+	char				*source;
+	int					fd;
+	size_t				f_size;
+	cl_double			*data_array;
+	int					array_size;
+	cl_int				ret;
+	cl_uint				ret_num_devices;
+	cl_uint				ret_num_platforms;
+	cl_platform_id		platform_id;
+	cl_device_id		device_id;
+	cl_context			context;
+	cl_command_queue	command_queue;
+	cl_mem				a_mem_obj;
+	cl_mem				c_mem_obj;
+	cl_program			program;
+	cl_kernel			kernel;
+	size_t				global_item_size;
+	size_t				local_item_size;
+}				t_opencl;
 
 t_complex		init_complex(double re, double im);
 t_complex		comp_sum(t_complex z1, t_complex z2);

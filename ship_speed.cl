@@ -54,9 +54,9 @@ __kernel void calc_ship(__global const double *data, __global int *image)
 	max_iter = data[1];
 	z_re = data[2];
 	z_im = data[3] + i * inc;
-	while (k < 1000)
+	while (k < 800)
 	{
-		image[k + i * 1000] = check(z_im, z_re, max_iter);
+		image[k + i * 800] = check(z_im, z_re, max_iter);
 		k++;
 		z_re += inc;
 	}
