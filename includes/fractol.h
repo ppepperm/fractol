@@ -122,6 +122,7 @@ int				get_mand_image(t_mandelbrot mand, int *image);
 void			draw_julia(t_julia julia);
 void			draw_mand(t_mandelbrot mand);
 void			draw_ship(t_ship ship);
+void			draw_spider1(t_mandelbrot mand);
 
 int				get_julia_image(t_julia julia, int *image);
 int				deal_key(int key, void *param);
@@ -174,5 +175,10 @@ void			mouse_move_sh(t_ship *ship, int x, int y);
 void			mouse_press_sh(t_ship *ship, int button, int x, int y);
 void			zoom_sh(t_ship *ship, int key);
 void			move_sh(t_ship *ship, int key);
+
+void			mouse_press_s(t_mandelbrot *mand, int button, int x, int y);
+void			mouse_move_s(t_mandelbrot *mand, int x, int y);
+void			zoom_s(t_mandelbrot *mand, int key);
+void			move_s(t_mandelbrot *mand, int key);
 
 #endif
