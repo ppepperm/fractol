@@ -50,8 +50,8 @@ int		deal_key_s1(int key, void *param)
 	t_mandelbrot *mand;
 
 	mand = (t_mandelbrot*)param;
-	zoom_m(mand, key);
-	move_m(mand, key);
+	zoom_s(mand, key);
+	move_s(mand, key);
 	if (key == 27)
 	{
 		mlx_clear_window(mand->mlx_ptr, mand->win_ptr);
@@ -89,7 +89,7 @@ int		deal_click_s1(int button, int x, int y, void *param)
 			mand->top_left.im += (4 * mand->zoom * 0.95 - 4 * mand->zoom) / 2;
 			draw_spider1(*mand);
 		}
-		mouse_press_m(mand, button, x, y);
+		mouse_press_s(mand, button, x, y);
 	}
 	return (0);
 }
@@ -102,7 +102,7 @@ int		deal_mish_s1(int x, int y, void *param)
 	if (x >= 0 && x <= SIZE && y >= 0 && y <= SIZE)
 	{
 		if (mand->mouse_press)
-			mouse_move_m(mand, x, y);
+			mouse_move_s(mand, x, y);
 		mand->mouse_pos.x = x - SIZE / 2;
 		mand->mouse_pos.y = SIZE / 2 - y;
 	}

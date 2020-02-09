@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME= fractol
-SRC := src/speed_by_billy_idol.c src/mandelbrot.c src/mandel_speed.c src/ship.c src/ship_speed.c src/spider1.c src/spider1_speed.c src/julia.c src/complex.c src/free.c src/main.c src/shortcut1.c src/shortcut2.c src/shortcut3.c
+SRC := src/speed_by_billy_idol.c src/mandelbrot.c src/mandel_speed.c src/ship.c src/ship_speed.c src/spider1.c src/spider1_speed.c src/julia.c src/complex.c src/free.c src/main.c src/shortcut1.c src/shortcut2.c src/shortcut3.c src/shortcut4.c
 OBJ := $(patsubst %.c, %.o, $(SRC))
 CFLAGS := -Wall -Wextra -Werror  -I includes
 LIB_FLAG :=  -L libft/ -lft  -L minilibx_macos -lmlx -framework OpenGL -framework AppKit -framework OpenCl
